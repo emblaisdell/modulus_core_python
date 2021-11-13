@@ -13,6 +13,8 @@ RUN pip install -r requirements.txt
 # copy the content of the local src directory to the working directory
 COPY src/ .
 
+RUN chmod +X ./run.sh
+
 # command to run on container start
 ENTRYPOINT [ "./run.sh" ]
 
