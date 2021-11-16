@@ -15,7 +15,7 @@ def main():
     print(len(inputBytes))
     print(inputs)
 
-    time.sleep(3)
+    #time.sleep(3)
 
     sys.stdout = open("./log", "w")
     outputs = func(inputs)
