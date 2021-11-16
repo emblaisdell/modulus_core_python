@@ -5,6 +5,8 @@ import modulus
 from strings import *
 
 def main():
+    print("start lookup")
+
     func = globals()[sys.argv[1]]
 
     print("reading input...")
@@ -20,6 +22,8 @@ def main():
     sys.stdout.buffer.write(outputBytes)
     # XXX: is this necessary?
     sys.stdout.flush()
+
+print("start running")
 
 if __name__ == "__main__":
     main()
