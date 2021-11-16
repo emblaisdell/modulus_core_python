@@ -15,7 +15,8 @@ def main():
     sys.stdout = sys.__stdout__
 
     outputBytes = modulus.encode([modulus.objectToBytes(outp) for outp in outputs])
-    sys.stdout.buffer.write(outputBytes)
+    print(outputs)
+    #sys.stdout.buffer.write(outputBytes)
     # XXX: is this necessary?
     sys.stdout.flush()
 
