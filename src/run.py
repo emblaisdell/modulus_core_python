@@ -7,7 +7,9 @@ from strings import *
 def main():
     func = globals()[sys.argv[1]]
 
-    inputBytes = sys.stdin.buffer.read()
+    print("reading input...")
+    inputBytes = sys.stdin.buffer.readall()
+    print("read input")
     inputs = [modulus.bytesToObject(*inp) for inp in zip(modulus.decode(inputBytes), func.inputTypes)]
 
     sys.stdout = open("./log", "w")
