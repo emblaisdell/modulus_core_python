@@ -8,7 +8,7 @@ def main():
     func = globals()[sys.argv[1]]
 
     print("reading input...")
-    inputBytes = sys.stdin.buffer.readall()
+    inputBytes = sys.stdin.readall()
     print("read input")
     inputs = [modulus.bytesToObject(*inp) for inp in zip(modulus.decode(inputBytes), func.inputTypes)]
 
