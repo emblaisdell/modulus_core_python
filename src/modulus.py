@@ -32,9 +32,6 @@ WORD_LENGTH = 4
 def decode(inputBytes):
     numArgs = int(int.from_bytes(inputBytes[0:WORD_LENGTH], byteorder='little') / WORD_LENGTH)
     pointers = [int.from_bytes(inputBytes[WORD_LENGTH*i:WORD_LENGTH*(i+1)], byteorder='little') for i in range(numArgs)]
-    print("numArgs")
-    print(numArgs)
-    print(len(pointers))
     pointers.append(len(inputBytes))
     return [inputBytes[pointers[i]:pointers[i+1]] for i in range(numArgs)]
 
