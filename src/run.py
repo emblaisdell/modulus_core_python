@@ -1,4 +1,5 @@
 import sys
+import time
 import modulus
 
 # import files with calculations
@@ -11,6 +12,8 @@ def main():
     inputs = [modulus.bytesToObject(*inp) for inp in zip(modulus.decode(inputBytes), func.inputTypes)]
     print("inputs")
     print(inputs)
+
+    time.sleep(3)
 
     sys.stdout = open("./log", "w")
     outputs = func(inputs)
