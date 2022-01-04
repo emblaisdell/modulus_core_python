@@ -32,21 +32,24 @@ WORD_LENGTH = 4
 byteorder = "little"
 
 def decode(inputBytes):
-    numArgs = int(int.from_bytes(inputBytes[0:WORD_LENGTH], byteorder=byteorder) / WORD_LENGTH)
-    pointers = [int.from_bytes(inputBytes[WORD_LENGTH*i:WORD_LENGTH*(i+1)], byteorder=byteorder) for i in range(numArgs)]
-    pointers.append(len(inputBytes))
-    return [inputBytes[pointers[i]:pointers[i+1]] for i in range(numArgs)]
+    global byteorder
+    byteorder = "big" if inputBytes[0:WORD_LENGTH//2]==b'\x00\x00' else "little"
+
+    numArgs = int(int.from_bytes(inputBytes[0:WORD_LENGTH], byteorder=byteorder))
+    lens = [int.from_bytes(inputBytes[WORD_LENGTH*i:WORD_LENGTH*(i+1)], byteorder=byteorder) for i in range(1,numArgs+1)]
+    inputs = [None] * numArgs
+    inputBytes = inputBytes[WORD_LENGTH*(numArgs+1):]
+    for i in range(numArgs):
+        split = lens[i]
+        inputs[i] = inputBytes[0:split]
+        inputBytes = inputBytes[split:]
+    return inputs
 
 def encode(outputs):
-    ln = len(outputs)
-    if ln == 0:
-        return b'\x00\x00\x00\x00' # TODO: test
-    runningLength = WORD_LENGTH * ln
-    outputBytes = b''
-    for i in range(ln):
-        outputBytes += runningLength.to_bytes(WORD_LENGTH, byteorder=byteorder)
-        runningLength += len(outputs[i])
-    for i in range(ln):
-        outputBytes += outputs[i]
+    global byteorder
+    outputBytes = len(outputs).to_bytes(WORD_LENGTH, byteorder=byteorder)
+    for output in outputs:
+        outputBytes += len(output).to_bytes(WORD_LENGTH, byteorder=byteorder)
+    for output in outputs:
+        outputBytes += output
     return outputBytes
-    
