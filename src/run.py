@@ -6,10 +6,13 @@ import modulus
 from strings import *
 
 def main():
-    func = globals()[sys.argv[1]]
 
     inputBytes = sys.stdin.buffer.read()
-    inputs = [modulus.bytesToObject(*inp) for inp in zip(modulus.decode(inputBytes), func.inputTypes)]
+    inputByteStrs = modulus.decode(inputBytes)
+
+    funcName = modulus.bytesToObject(inputByteStrs[0],"string")
+    func = globals()[funcName]
+    inputs = [modulus.bytesToObject(*inp) for inp in zip(inputByteStrs[1:], func.inputTypes)]
 
     sys.stdout = open("./log", "w")
     outputs = func(inputs)
